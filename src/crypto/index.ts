@@ -6,3 +6,4 @@
 export * from '@/crypto/base58';
 export * from '@/crypto/hash';
 export * from '@/crypto/keypairs';
+export * from '@/crypto/wallet';

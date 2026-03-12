@@ -17,9 +17,17 @@
  * await ws.connect();
  * ws.onLedger((ledger) => console.log('New ledger:', ledger));
  *
- * // Wallet
+ * // Wallet with Local Signing
  * const wallet = Wallet.generate();
  * console.log('Address:', wallet.address);
+ *
+ * // Sign transaction locally (no node required)
+ * const signed = wallet.sign(payment);
+ * console.log('Tx Blob:', signed.tx_blob);
+ * console.log('Hash:', signed.hash);
+ *
+ * // Submit signed transaction
+ * await rpc.submit({ tx_blob: signed.tx_blob });
  * ```
  */
 
@@ -44,6 +52,18 @@ export {
 
 // Transactions
 export * from '@/transactions';
+
+// Wallet Types
+export type { SignedTransaction } from '@/crypto/wallet';
+export {
+  Wallet,
+  signTransaction,
+  verifyTransaction,
+  decodeTransactionBlob,
+  getTransactionHash,
+} from '@/crypto/wallet';
+
+export { Serializer } from '@/utils/serializer';
 
 // Version
 export const VERSION = '1.0.0';

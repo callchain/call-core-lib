@@ -4,3 +4,4 @@
 
 export * from '@/utils/amount';
 export * from '@/utils/validation';
+export * from '@/utils/serializer';
