@@ -43,27 +43,6 @@ ws.onLedger((ledger) => {
 });
 ```
 
-### Wallet Generation
-
-```typescript
-import { generateWallet } from 'call-core-lib';
-
-const wallet = generateWallet();
-console.log('Address:', wallet.address);
-console.log('Seed:', wallet.seed);
-```
-
-### Transaction Building
-
-```typescript
-import { PaymentBuilder, callToDrops } from 'call-core-lib';
-
-const payment = new PaymentBuilder('cSender...', 1)
-  .setDestination('cDestination...')
-  .setAmount(callToDrops('10'))
-  .build();
-```
-
 ## Documentation
 
 | Guide | Description |
