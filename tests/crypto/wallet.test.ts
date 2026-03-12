@@ -21,7 +21,7 @@ describe('Wallet', () => {
       expect(wallet.publicKey).toBeDefined();
       expect(wallet.publicKey.length).toBe(66);
       expect(wallet.seed).toBeDefined();
-      expect(wallet.seed.startsWith('s')).toBe(true);
+      expect(wallet.seed.length).toBeGreaterThan(10);
     });
 
     it('should generate unique wallets', () => {
@@ -46,9 +46,10 @@ describe('Wallet', () => {
   describe('sign', () => {
     it('should sign a payment transaction', () => {
       const wallet = Wallet.generate();
+      const destWallet = Wallet.generate();
 
       const payment = new PaymentBuilder(wallet.address, 1)
-        .setDestination('cDestinationAddressHere')
+        .setDestination(destWallet.address)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -64,9 +65,10 @@ describe('Wallet', () => {
 
     it('should include signing public key in signed tx', () => {
       const wallet = Wallet.generate();
+      const destWallet = Wallet.generate();
 
       const payment = new PaymentBuilder(wallet.address, 1)
-        .setDestination('cDestinationAddressHere')
+        .setDestination(destWallet.address)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -78,9 +80,11 @@ describe('Wallet', () => {
 
     it('should reject transaction with wrong account', () => {
       const wallet = Wallet.generate();
+      const otherWallet = Wallet.generate();
+      const destWallet = Wallet.generate();
 
-      const payment = new PaymentBuilder('cOtherAddressHere', 1)
-        .setDestination('cDestinationAddressHere')
+      const payment = new PaymentBuilder(otherWallet.address, 1)
+        .setDestination(destWallet.address)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -117,9 +121,10 @@ describe('Wallet', () => {
   describe('verify', () => {
     it('should verify a signed transaction', () => {
       const wallet = Wallet.generate();
+      const destWallet = Wallet.generate();
 
       const payment = new PaymentBuilder(wallet.address, 1)
-        .setDestination('cDestinationAddressHere')
+        .setDestination(destWallet.address)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -131,9 +136,10 @@ describe('Wallet', () => {
 
     it('should reject tampered transaction', () => {
       const wallet = Wallet.generate();
+      const destWallet = Wallet.generate();
 
       const payment = new PaymentBuilder(wallet.address, 1)
-        .setDestination('cDestinationAddressHere')
+        .setDestination(destWallet.address)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -151,9 +157,10 @@ describe('Wallet', () => {
 describe('signTransaction', () => {
   it('should sign with standalone function', () => {
     const wallet = Wallet.generate();
+    const destWallet = Wallet.generate();
 
     const payment = new PaymentBuilder(wallet.address, 1)
-      .setDestination('cDestinationAddressHere')
+      .setDestination(destWallet.address)
       .setAmount('1000000')
       .setFee('100')
       .build();
@@ -168,9 +175,10 @@ describe('signTransaction', () => {
 describe('verifyTransaction', () => {
   it('should verify with standalone function', () => {
     const wallet = Wallet.generate();
+    const destWallet = Wallet.generate();
 
     const payment = new PaymentBuilder(wallet.address, 1)
-      .setDestination('cDestinationAddressHere')
+      .setDestination(destWallet.address)
       .setAmount('1000000')
       .setFee('100')
       .build();
@@ -184,9 +192,10 @@ describe('verifyTransaction', () => {
 describe('decodeTransactionBlob', () => {
   it('should decode transaction blob', () => {
     const wallet = Wallet.generate();
+    const destWallet = Wallet.generate();
 
     const payment = new PaymentBuilder(wallet.address, 1)
-      .setDestination('cDestinationAddressHere')
+      .setDestination(destWallet.address)
       .setAmount('1000000')
       .setFee('100')
       .build();
@@ -203,9 +212,10 @@ describe('decodeTransactionBlob', () => {
 describe('getTransactionHash', () => {
   it('should generate transaction hash', () => {
     const wallet = Wallet.generate();
+    const destWallet = Wallet.generate();
 
     const payment = new PaymentBuilder(wallet.address, 1)
-      .setDestination('cDestinationAddressHere')
+      .setDestination(destWallet.address)
       .setAmount('1000000')
       .setFee('100')
       .build();

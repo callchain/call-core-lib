@@ -3,12 +3,9 @@
  */
 
 import { isValidAddress, isValidSecret } from '@/crypto/keypairs';
-import type { AccountID, Amount, Currency, LedgerIndex } from '@/types';
+import type { Amount, LedgerIndex } from '@/types';
 
 export { isValidAddress, isValidSecret };
-
-// Base58 alphabet for validation
-const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 
 /**
  * Validate transaction hash

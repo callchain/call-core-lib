@@ -113,7 +113,7 @@ export function compareAmounts(a: Amount, b: Amount): number {
   if (isNativeAmount(a) && isNativeAmount(b)) {
     const aBn = new BigNumber(a);
     const bBn = new BigNumber(b);
-    return aBn.comparedTo(bBn);
+    return aBn.comparedTo(bBn) ?? 0;
   }
 
   if (isIssuedCurrency(a) && isIssuedCurrency(b)) {
@@ -123,7 +123,7 @@ export function compareAmounts(a: Amount, b: Amount): number {
     }
     const aBn = new BigNumber(a.value);
     const bBn = new BigNumber(b.value);
-    return aBn.comparedTo(bBn);
+    return aBn.comparedTo(bBn) ?? 0;
   }
 
   throw new Error('Invalid amounts');

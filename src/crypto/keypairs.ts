@@ -4,7 +4,7 @@
  */
 
 import { ec as EC } from 'elliptic';
-import { hmacSha512, sha256, sha512Half, hash160, concatBytes } from '@/crypto/hash';
+import { hmacSha512, sha256, hash160 } from '@/crypto/hash';
 import { encodeBase58Check, decodeBase58Check } from '@/crypto/base58';
 
 // secp256k1 curve
@@ -13,8 +13,8 @@ const secp256k1 = new EC('secp256k1');
 // Version bytes for different key types
 const VERSION_BYTES = {
   ED25519_SEED: new Uint8Array([0x01, 0xe1, 0x4b]),
-  SEED: new Uint8Array([0x21]), // 's' prefix for family seed
-  ACCOUNT_ID: new Uint8Array([0x00]), // 'c' prefix for address
+  SEED: new Uint8Array([0x21]), // 0x21 is the standard seed version byte
+  ACCOUNT_ID: new Uint8Array([0x57]), // 0x57 produces 'c' prefix for addresses
   NODE_PUBLIC: new Uint8Array([0x1c]),
   ACCOUNT_PUBLIC: new Uint8Array([0x23]),
 };
@@ -35,9 +35,9 @@ export function generateSeed(): Uint8Array {
 }
 
 /**
- * Encode seed to family seed string (starts with 's')
+ * Encode seed to family seed string
  * @param seed - 16-byte seed
- * @returns Family seed string
+ * @returns Family seed string (base58check encoded)
  */
 export function encodeSeed(seed: Uint8Array): string {
   return encodeBase58Check(seed, VERSION_BYTES.SEED);
@@ -45,7 +45,7 @@ export function encodeSeed(seed: Uint8Array): string {
 
 /**
  * Decode family seed string to seed bytes
- * @param seed - Family seed string (starts with 's')
+ * @param seed - Family seed string
  * @returns Seed bytes
  */
 export function decodeSeed(seed: string): Uint8Array {
@@ -83,7 +83,7 @@ export function deriveKeypair(
 
   return {
     publicKey: publicKey.toUpperCase(),
-    privateKey: root.toString('hex').toUpperCase(),
+    privateKey: bytesToHex(root).toUpperCase(),
   };
 }
 
@@ -93,7 +93,7 @@ export function deriveKeypair(
  * @param account - Account index
  * @returns Private key
  */
-function derivePrivateKey(seed: Uint8Array, account: number): Uint8Array {
+function derivePrivateKey(seed: Uint8Array, _account: number): Uint8Array {
   // Use HMAC-SHA-512 with key "Call seed"
   const hmac = hmacSha512(seed, new TextEncoder().encode('Call seed'));
 
@@ -225,7 +225,6 @@ export function isValidAddress(address: string): boolean {
  * @returns True if valid
  */
 export function isValidSecret(secret: string): boolean {
-  if (!secret.startsWith('s')) return false;
   try {
     const result = decodeBase58Check(secret);
     return result.version[0] === VERSION_BYTES.SEED[0];

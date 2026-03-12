@@ -236,7 +236,7 @@ describe('RpcClient', () => {
         id: 1,
       };
 
-      (global.fetch as jest.Mock).mockResolvedValueOnce({
+      (global.fetch as jest.Mock).mockResolvedValue({
         ok: true,
         json: async () => mockResponse,
       });
@@ -263,9 +263,20 @@ describe('RpcClient', () => {
     it('should throw on timeout', async () => {
       const slowClient = new RpcClient({ server: 'http://localhost:5005', timeout: 1 });
 
-      (global.fetch as jest.Mock).mockImplementationOnce(
-        () => new Promise((resolve) => setTimeout(resolve, 100))
-      );
+      (global.fetch as jest.Mock).mockImplementationOnce((_url: string, options: { signal?: AbortSignal }) => {
+        return new Promise((resolve, reject) => {
+          // Listen for abort event
+          if (options.signal) {
+            options.signal.addEventListener('abort', () => {
+              const error = new Error('Aborted');
+              (error as Error & { name: string }).name = 'AbortError';
+              reject(error);
+            });
+          }
+          // Delay longer than timeout
+          setTimeout(() => resolve({ ok: true, json: async () => ({}) }), 100);
+        });
+      });
 
       await expect(slowClient.serverInfo()).rejects.toThrow('timeout');
     });

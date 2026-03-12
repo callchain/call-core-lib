@@ -12,7 +12,7 @@ import type {
 } from '@/types';
 
 import { sha512Half } from '@/crypto/hash';
-import { decodeBase58Check } from '@/crypto/base58';
+import { encodeBase58Check, decodeBase58Check } from '@/crypto/base58';
 
 // Field type constants
 const FieldType = {
@@ -31,6 +31,23 @@ const FieldType = {
   Vector256: 0x1a,
 } as const;
 
+// Transaction type mapping (string to number)
+const TX_TYPES: Record<string, number> = {
+  Payment: 0,
+  AccountSet: 3,
+  SetRegularKey: 5,
+  OfferCreate: 7,
+  OfferCancel: 8,
+  SignerListSet: 12,
+  DepositPreauth: 19,
+  TrustSet: 20,
+};
+
+// Reverse mapping (number to string) for deserialization
+const TX_TYPES_REVERSE: Record<number, string> = Object.fromEntries(
+  Object.entries(TX_TYPES).map(([k, v]) => [v, k])
+);
+
 // Field codes for common fields
 const FieldIds: Record<string, [number, number]> = {
   // Type code, Field code
@@ -40,7 +57,7 @@ const FieldIds: Record<string, [number, number]> = {
   Sequence: [FieldType.UInt32, 0x04],
   LastLedgerSequence: [FieldType.UInt32, 0x1b],
   AccountTxnID: [FieldType.Hash256, 0x05],
-  Fee: [FieldType.Amount, 0x08],
+  Fee: [FieldType.UInt64, 0x08],
   SigningPubKey: [FieldType.VL, 0x03],
   TxnSignature: [FieldType.VL, 0x04],
   Account: [FieldType.Account, 0x01],
@@ -68,22 +85,6 @@ const FieldIds: Record<string, [number, number]> = {
   Authorize: [FieldType.Account, 0x16],
   Unauthorize: [FieldType.Account, 0x17],
   Memos: [FieldType.STArray, 0x09],
-};
-
-// Transaction type values
-const TransactionTypeValues: Record<string, number> = {
-  Payment: 0,
-  AccountSet: 3,
-  SetRegularKey: 5,
-  NicknameSet: 6,
-  OfferCreate: 7,
-  OfferCancel: 8,
-  SignerListSet: 12,
-  IssueSet: 16,
-  DepositPreauth: 19,
-  TrustSet: 20,
-  EnableAmendment: 100,
-  SetFee: 101,
 };
 
 export class Serializer {
@@ -183,7 +184,8 @@ export class Serializer {
 
     for (const key of commonFieldOrder) {
       if (key in tx && tx[key as keyof Transaction] !== undefined) {
-        fields.push([this.toCamelCase(key), tx[key as keyof Transaction]]);
+        const tuple: [string, unknown] = [this.toCamelCase(key), tx[key as keyof Transaction]];
+        fields.push(tuple);
       }
     }
 
@@ -200,7 +202,8 @@ export class Serializer {
       return idA[1] - idB[1];
     });
 
-    fields.push(...remainingFields.map(([k, v]) => [this.toCamelCase(k), v]));
+    const mappedFields = remainingFields.map(([k, v]): [string, unknown] => [this.toCamelCase(k), v]);
+    fields.push(...mappedFields);
 
     // Signature comes last
     if (tx.txn_signature) {
@@ -240,7 +243,16 @@ export class Serializer {
     // Write field value
     switch (fieldId[0]) {
       case FieldType.UInt16:
-        this.pushUInt16(value as number);
+        // Handle transaction type string to number conversion
+        if (fieldName === 'TransactionType' && typeof value === 'string') {
+          const txType = TX_TYPES[value];
+          if (txType === undefined) {
+            throw new Error(`Unknown transaction type: ${value}`);
+          }
+          this.pushUInt16(txType);
+        } else {
+          this.pushUInt16(value as number);
+        }
         break;
       case FieldType.UInt32:
         this.pushUInt32(value as number);
@@ -294,7 +306,12 @@ export class Serializer {
 
     switch (typeCode) {
       case FieldType.UInt16:
-        return [fieldName, this.readUInt16(bytes, i), i + 2];
+        const uint16Value = this.readUInt16(bytes, i);
+        // Convert transaction type number back to string
+        if (fieldName === 'transaction_type') {
+          return [fieldName, TX_TYPES_REVERSE[uint16Value] || uint16Value, i + 2];
+        }
+        return [fieldName, uint16Value, i + 2];
       case FieldType.UInt32:
         return [fieldName, this.readUInt32(bytes, i), i + 4];
       case FieldType.UInt64:
@@ -317,7 +334,8 @@ export class Serializer {
   private getFieldNameById(typeCode: number, fieldCode: number): string | null {
     for (const [name, id] of Object.entries(FieldIds)) {
       if (id[0] === typeCode && id[1] === fieldCode) {
-        return name;
+        // Convert PascalCase to snake_case for consistency with transaction objects
+        return name.replace(/([A-Z])/g, '_$1').toLowerCase().replace(/^_/, '');
       }
     }
     return null;
@@ -555,7 +573,7 @@ export class Serializer {
     );
   }
 
-  private readUInt64(bytes: Uint8Array, offset: number): BigInt {
+  private readUInt64(bytes: Uint8Array, offset: number): bigint {
     let value = 0n;
     for (let i = 0; i < 8; i++) {
       value = (value << 8n) | BigInt(bytes[offset + i]);
@@ -645,21 +663,9 @@ export class Serializer {
     const length = bytes[offset];
     const payload = bytes.slice(offset + 1, offset + 1 + length);
 
-    // Convert to base58 check
-    const version = new Uint8Array([0x00]);
-    const combined = new Uint8Array(version.length + payload.length);
-    combined.set(version);
-    combined.set(payload, version.length);
-
-    // Simple base58 encode (implementation omitted for brevity)
-    // In practice, use encodeBase58Check
-    return 'c' + this.bytesToHex(payload).substring(0, 20);
-  }
-
-  private bytesToHex(bytes: Uint8Array): string {
-    return Array.from(bytes)
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
+    // Re-encode as base58check address with version byte 0x57 for 'c' prefix
+    const version = new Uint8Array([0x57]);
+    return encodeBase58Check(payload, version);
   }
 }
 

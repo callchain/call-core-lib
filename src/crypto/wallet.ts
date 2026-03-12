@@ -46,7 +46,8 @@ export class Wallet {
       throw new Error('Account is required');
     }
     if (tx.account !== this.address) {
-      throw new Error(`Transaction account ${tx.account} does not match wallet address ${this.address}`);\n    }
+      throw new Error(`Transaction account ${tx.account} does not match wallet address ${this.address}`);
+    }
 
     // Create transaction copy for signing
     const txToSign: Transaction = {

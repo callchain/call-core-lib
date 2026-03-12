@@ -4,10 +4,20 @@
 
 import { Serializer } from '@/utils/serializer';
 import { PaymentBuilder } from '@/transactions/builder';
-import type { Transaction } from '@/types';
+import { generateWallet } from '@/crypto/keypairs';
 
 describe('Serializer', () => {
   let serializer: Serializer;
+  let testAddress1: string;
+  let testAddress2: string;
+
+  beforeAll(() => {
+    // Generate valid addresses for testing
+    const wallet1 = generateWallet();
+    const wallet2 = generateWallet();
+    testAddress1 = wallet1.address;
+    testAddress2 = wallet2.address;
+  });
 
   beforeEach(() => {
     serializer = new Serializer();
@@ -15,8 +25,8 @@ describe('Serializer', () => {
 
   describe('basic serialization', () => {
     it('should serialize a simple payment', () => {
-      const payment = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 1)
-        .setDestination('cDestinationAddressHere')
+      const payment = new PaymentBuilder(testAddress1, 1)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -27,8 +37,8 @@ describe('Serializer', () => {
     });
 
     it('should deserialize a simple payment', () => {
-      const payment = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 1)
-        .setDestination('cDestinationAddressHere')
+      const payment = new PaymentBuilder(testAddress1, 1)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -41,8 +51,8 @@ describe('Serializer', () => {
     });
 
     it('should round-trip serialize and deserialize', () => {
-      const original = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 123)
-        .setDestination('cDestAddressHere')
+      const original = new PaymentBuilder(testAddress1, 123)
+        .setDestination(testAddress2)
         .setAmount('5000000')
         .setFee('120')
         .setDestinationTag(999)
@@ -59,8 +69,8 @@ describe('Serializer', () => {
 
   describe('hex encoding', () => {
     it('should convert transaction to hex blob', () => {
-      const payment = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 1)
-        .setDestination('cDestinationAddressHere')
+      const payment = new PaymentBuilder(testAddress1, 1)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -72,8 +82,8 @@ describe('Serializer', () => {
     });
 
     it('should parse hex blob back to transaction', () => {
-      const original = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 1)
-        .setDestination('cDestinationAddressHere')
+      const original = new PaymentBuilder(testAddress1, 1)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -88,8 +98,8 @@ describe('Serializer', () => {
 
   describe('getTransactionHash', () => {
     it('should generate consistent hash for same transaction', () => {
-      const payment = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 1)
-        .setDestination('cDestinationAddressHere')
+      const payment = new PaymentBuilder(testAddress1, 1)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();
@@ -101,14 +111,14 @@ describe('Serializer', () => {
     });
 
     it('should generate different hash for different transactions', () => {
-      const payment1 = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 1)
-        .setDestination('cDestinationAddressHere')
+      const payment1 = new PaymentBuilder(testAddress1, 1)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();
 
-      const payment2 = new PaymentBuilder('cGMJBrEfFssWuas4kCoHTX5r6aMEf6QHhy', 2)
-        .setDestination('cDestinationAddressHere')
+      const payment2 = new PaymentBuilder(testAddress1, 2)
+        .setDestination(testAddress2)
         .setAmount('1000000')
         .setFee('100')
         .build();

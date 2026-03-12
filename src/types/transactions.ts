@@ -14,7 +14,7 @@ import type {
   Signer,
   SignerEntry,
   TxBlob,
-  TxFlags,
+  TransactionFlags,
   TxHash,
 } from './common';
 
@@ -65,7 +65,7 @@ export interface BaseTransaction {
   transaction_type?: TxTypeString;
   sequence?: Sequence;
   fee?: Fee;
-  flags?: TxFlags;
+  flags?: TransactionFlags;
   source_tag?: number;
   signing_pub_key?: PublicKey;
   txn_signature?: string;

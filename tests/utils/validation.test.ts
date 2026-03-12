@@ -22,6 +22,7 @@ import {
   isValidTickSize,
   isValidTransferRate,
 } from '@/utils/validation';
+import { generateWallet } from '@/crypto/keypairs';
 
 describe('Validation Utils', () => {
   describe('isValidAddress', () => {
@@ -134,17 +135,19 @@ describe('Validation Utils', () => {
     });
 
     it('should validate issued currency amounts', () => {
+      const wallet = generateWallet();
       expect(isValidAmount({
         currency: 'USD',
-        issuer: 'c1234567890ABCDEF',
+        issuer: wallet.address,
         value: '100',
       })).toBe(true);
     });
 
     it('should reject invalid issued amounts', () => {
+      const wallet = generateWallet();
       expect(isValidAmount({
         currency: 'INVALID',
-        issuer: 'c1234567890ABCDEF',
+        issuer: wallet.address,
         value: '100',
       })).toBe(false);
     });

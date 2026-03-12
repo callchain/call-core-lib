@@ -9,7 +9,6 @@ import type {
   LedgerHash,
   LedgerIndex,
   TxHash,
-  WsConfig,
   WsRequest,
   WsMessage,
   WsSuccessResponse,
@@ -106,7 +105,7 @@ export class WebSocketClient {
           resolve();
         };
 
-        this.ws.onmessage = (event) => {
+        this.ws.onmessage = (event: WebSocket.MessageEvent) => {
           this.handleMessage(event.data as string);
         };
 
@@ -120,9 +119,9 @@ export class WebSocketClient {
           }
         };
 
-        this.ws.onerror = (error) => {
+        this.ws.onerror = (error: WebSocket.ErrorEvent) => {
           clearTimeout(timeoutId);
-          reject(new Error(`WebSocket error: ${error}`));
+          reject(new Error(`WebSocket error: ${error.message}`));
         };
       } catch (error) {
         reject(error);

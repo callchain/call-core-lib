@@ -41,6 +41,8 @@ import type {
   RandomResult,
   RipplePathFindRequest,
   RipplePathFindResult,
+  ServerInfoResult,
+  ServerStateResult,
   SignForRequest,
   SignForResult,
   SignRequest,
@@ -98,8 +100,8 @@ export class RpcClient {
       id: this.requestId,
     };
 
-    if (params !== undefined) {
-      request.params = params;
+    if (params !== undefined && params !== null) {
+      request.params = params as unknown[] | Record<string, unknown>;
     }
 
     const controller = new AbortController();
@@ -433,31 +435,10 @@ export class RpcError extends Error {
   }
 }
 
-// Missing type definition
+// Note: ServerStateResult and NetworkInfoResult are imported from @/types
 interface NetworkInfoResult {
   ports?: {
     port: number;
     protocol: string[];
   }[];
-}
-
-// Missing type definition
-interface ServerStateResult {
-  state: {
-    build_version: string;
-    complete_ledgers: string;
-    io_latency_ms: number;
-    load_base: number;
-    load_factor: number;
-    peers: number;
-    server_state: string;
-    validated_ledger: {
-      base_fee: number;
-      close_time: number;
-      hash: string;
-      reserve_base: number;
-      reserve_inc: number;
-      seq: number;
-    };
-  };
 }

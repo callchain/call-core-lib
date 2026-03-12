@@ -6,7 +6,6 @@
 import type {
   AccountID,
   Amount,
-  Currency,
   Memo,
   SignerEntry,
   Transaction,
@@ -17,14 +16,12 @@ import type {
   OfferCancel,
   SetRegularKey,
   SignerListSet,
-  IssueSet,
-  NicknameSet,
   DepositPreauth,
   TxTypeString,
 } from '@/types';
 
-// Transaction type mapping
-const TX_TYPES: Record<TxTypeString, number> = {
+// Transaction type mapping (exported for reference)
+export const TX_TYPES: Record<TxTypeString, number> = {
   'Payment': 0,
   'AccountSet': 3,
   'SetRegularKey': 5,

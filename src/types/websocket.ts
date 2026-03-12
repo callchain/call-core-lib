@@ -3,8 +3,7 @@
  */
 
 import type { AccountID, LedgerHash, TxHash } from './common';
-import type { LedgerHeader, TransactionWithMetadata } from './transactions';
-import type { FeeResult, ServerInfoResult } from './rpc';
+import type { TransactionWithMetadata } from './transactions';
 
 /**
  * WebSocket command types
@@ -363,6 +362,6 @@ export interface UnsubscribeResult {
 /**
  * Ping result
  */
-export interface PingResult {
+export interface WsPingResult {
   role?: string;
 }

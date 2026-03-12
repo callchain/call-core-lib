@@ -17,12 +17,8 @@ import type {
 } from './common';
 import type {
   AccountRoot,
-  CallState,
   Ledger,
   LedgerEntry,
-  LedgerHeader,
-  OfferEntry,
-  SignerEntry,
   SignerList,
   Transaction,
   TransactionMetadata,

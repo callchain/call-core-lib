@@ -15,11 +15,14 @@ import {
   createTransaction,
   TxFlags,
 } from '@/transactions/builder';
+import type { Payment, AccountSet, TrustSet, OfferCreate, OfferCancel, SetRegularKey, SignerListSet, DepositPreauth } from '@/types';
 
 describe('TransactionBuilder', () => {
   describe('base builder', () => {
     it('should create basic transaction', () => {
-      const tx = new TransactionBuilder('c1234567890ABCDEF', 1)
+      const tx = new PaymentBuilder('c1234567890ABCDEF', 1)
+        .setDestination('c0987654321FEDCBA')
+        .setAmount('1000000')
         .setFee('100')
         .setFlags(TxFlags.tfFullyCanonicalSig)
         .build();
@@ -31,7 +34,9 @@ describe('TransactionBuilder', () => {
     });
 
     it('should add memo', () => {
-      const tx = new TransactionBuilder('c1234567890ABCDEF', 1)
+      const tx = new PaymentBuilder('c1234567890ABCDEF', 1)
+        .setDestination('c0987654321FEDCBA')
+        .setAmount('1000000')
         .addMemo({ memo_data: 'ABCDEF' })
         .build();
 
@@ -40,7 +45,9 @@ describe('TransactionBuilder', () => {
     });
 
     it('should add text memo', () => {
-      const tx = new TransactionBuilder('c1234567890ABCDEF', 1)
+      const tx = new PaymentBuilder('c1234567890ABCDEF', 1)
+        .setDestination('c0987654321FEDCBA')
+        .setAmount('1000000')
         .addTextMemo('Hello')
         .build();
 
@@ -49,7 +56,9 @@ describe('TransactionBuilder', () => {
     });
 
     it('should set last ledger sequence', () => {
-      const tx = new TransactionBuilder('c1234567890ABCDEF', 1)
+      const tx = new PaymentBuilder('c1234567890ABCDEF', 1)
+        .setDestination('c0987654321FEDCBA')
+        .setAmount('1000000')
         .setLastLedgerSequence(1000)
         .build();
 
@@ -68,7 +77,7 @@ describe('TransactionBuilder', () => {
         .setDestination('c0987654321FEDCBA')
         .setAmount('1000000')
         .setFee('100')
-        .build();
+        .build() as Payment;
 
       expect(tx.transaction_type).toBe('Payment');
       expect(tx.destination).toBe('c0987654321FEDCBA');
@@ -80,7 +89,7 @@ describe('TransactionBuilder', () => {
         .setDestination('c0987654321FEDCBA')
         .setAmount('1000000')
         .setDestinationTag(12345)
-        .build();
+        .build() as Payment;
 
       expect(tx.destination_tag).toBe(12345);
     });
@@ -90,7 +99,7 @@ describe('TransactionBuilder', () => {
         .setDestination('c0987654321FEDCBA')
         .setAmount('1000000')
         .setSendMax('1500000')
-        .build();
+        .build() as Payment;
 
       expect(tx.send_max).toBe('1500000');
     });
@@ -121,7 +130,7 @@ describe('TransactionBuilder', () => {
       const tx = new AccountSetBuilder('c1234567890ABCDEF', 1)
         .setDomain('example.com')
         .setFee('100')
-        .build();
+        .build() as AccountSet;
 
       expect(tx.transaction_type).toBe('AccountSet');
       expect(tx.domain).toBe('6578616D706C652E636F6D');
@@ -130,7 +139,7 @@ describe('TransactionBuilder', () => {
     it('should set email hash', () => {
       const tx = new AccountSetBuilder('c1234567890ABCDEF', 1)
         .setEmailHash('ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890')
-        .build();
+        .build() as AccountSet;
 
       expect(tx.email_hash).toBe('ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890');
     });
@@ -138,7 +147,7 @@ describe('TransactionBuilder', () => {
     it('should set transfer rate', () => {
       const tx = new AccountSetBuilder('c1234567890ABCDEF', 1)
         .setTransferRate(1000000001)
-        .build();
+        .build() as AccountSet;
 
       expect(tx.transfer_rate).toBe(1000000001);
     });
@@ -146,7 +155,7 @@ describe('TransactionBuilder', () => {
     it('should require destination tag', () => {
       const tx = new AccountSetBuilder('c1234567890ABCDEF', 1)
         .requireDestTag()
-        .build();
+        .build() as AccountSet;
 
       expect(tx.set_flag).toBe(TxFlags.tfRequireDestTag);
     });
@@ -154,7 +163,7 @@ describe('TransactionBuilder', () => {
     it('should disallow call', () => {
       const tx = new AccountSetBuilder('c1234567890ABCDEF', 1)
         .disallowCall()
-        .build();
+        .build() as AccountSet;
 
       expect(tx.set_flag).toBe(TxFlags.tfDisallowCall);
     });
@@ -169,7 +178,7 @@ describe('TransactionBuilder', () => {
           value: '1000',
         })
         .setFee('100')
-        .build();
+        .build() as TrustSet;
 
       expect(tx.transaction_type).toBe('TrustSet');
       expect(tx.limit_amount).toEqual({
@@ -184,7 +193,7 @@ describe('TransactionBuilder', () => {
         .setLimitAmount({ currency: 'USD', issuer: 'c0987654321FEDCBA', value: '1000' })
         .setQualityIn(1000000000)
         .setQualityOut(1000000000)
-        .build();
+        .build() as TrustSet;
 
       expect(tx.quality_in).toBe(1000000000);
       expect(tx.quality_out).toBe(1000000000);
@@ -210,7 +219,7 @@ describe('TransactionBuilder', () => {
           value: '100',
         })
         .setFee('100')
-        .build();
+        .build() as OfferCreate;
 
       expect(tx.transaction_type).toBe('OfferCreate');
       expect(tx.taker_pays).toBe('1000000');
@@ -226,7 +235,7 @@ describe('TransactionBuilder', () => {
         .setTakerPays('1000000')
         .setTakerGets('1000000')
         .setExpiration(1234567890)
-        .build();
+        .build() as OfferCreate;
 
       expect(tx.expiration).toBe(1234567890);
     });
@@ -257,7 +266,7 @@ describe('TransactionBuilder', () => {
       const tx = new OfferCancelBuilder('c1234567890ABCDEF', 1)
         .setOfferSequence(123)
         .setFee('100')
-        .build();
+        .build() as OfferCancel;
 
       expect(tx.transaction_type).toBe('OfferCancel');
       expect(tx.offer_sequence).toBe(123);
@@ -269,7 +278,7 @@ describe('TransactionBuilder', () => {
       const tx = new SetRegularKeyBuilder('c1234567890ABCDEF', 1)
         .setRegularKey('c0987654321FEDCBA')
         .setFee('100')
-        .build();
+        .build() as SetRegularKey;
 
       expect(tx.transaction_type).toBe('SetRegularKey');
       expect(tx.regular_key).toBe('c0987654321FEDCBA');
@@ -279,7 +288,7 @@ describe('TransactionBuilder', () => {
       const tx = new SetRegularKeyBuilder('c1234567890ABCDEF', 1)
         .setRegularKey(null)
         .setFee('100')
-        .build();
+        .build() as SetRegularKey;
 
       expect(tx.regular_key).toBeUndefined();
     });
@@ -292,7 +301,7 @@ describe('TransactionBuilder', () => {
         .addSigner('c1111111111111111', 1)
         .addSigner('c2222222222222222', 1)
         .setFee('100')
-        .build();
+        .build() as SignerListSet;
 
       expect(tx.transaction_type).toBe('SignerListSet');
       expect(tx.signer_quorum).toBe(2);
@@ -309,7 +318,7 @@ describe('TransactionBuilder', () => {
       const tx = new SignerListSetBuilder('c1234567890ABCDEF', 1)
         .setSignerQuorum(3)
         .setSignerEntries(entries)
-        .build();
+        .build() as SignerListSet;
 
       expect(tx.signer_entries).toEqual(entries);
     });
@@ -320,7 +329,7 @@ describe('TransactionBuilder', () => {
       const tx = new DepositPreauthBuilder('c1234567890ABCDEF', 1)
         .authorize('c0987654321FEDCBA')
         .setFee('100')
-        .build();
+        .build() as DepositPreauth;
 
       expect(tx.transaction_type).toBe('DepositPreauth');
       expect(tx.authorize).toBe('c0987654321FEDCBA');
@@ -330,7 +339,7 @@ describe('TransactionBuilder', () => {
       const tx = new DepositPreauthBuilder('c1234567890ABCDEF', 1)
         .unauthorize('c0987654321FEDCBA')
         .setFee('100')
-        .build();
+        .build() as DepositPreauth;
 
       expect(tx.transaction_type).toBe('DepositPreauth');
       expect(tx.unauthorize).toBe('c0987654321FEDCBA');

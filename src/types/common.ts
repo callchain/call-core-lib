@@ -58,9 +58,10 @@ export type Sequence = number;
 export type Fee = string;
 
 /**
- * Transaction flags
+ * Transaction flags (alias for number)
+ * @deprecated Use number directly or TxFlags from transactions/builder
  */
-export type TxFlags = number;
+export type TransactionFlags = number;
 
 /**
  * Unix timestamp
