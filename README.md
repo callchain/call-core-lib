@@ -458,6 +458,17 @@ npm run lint
 npm run typecheck
 ```
 
+## Documentation Guides
+
+| Guide | Description |
+|-------|-------------|
+| [Getting Started](./docs/getting-started.md) | Installation, quick start, and basic concepts |
+| [RPC Client](./docs/rpc-client.md) | Complete guide to all 80+ RPC methods |
+| [WebSocket Client](./docs/websocket-client.md) | Real-time subscriptions and event handling |
+| [Transactions](./docs/transactions.md) | Building and signing all transaction types |
+| [Crypto](./docs/crypto.md) | Wallet generation, keys, signing, and validation |
+| [API Reference](./docs/api-reference.md) | Complete API reference for all exports |
+
 ## API Reference
 
 See the TypeScript definitions for complete API documentation.
