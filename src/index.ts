@@ -107,5 +107,11 @@ export {
   type ServerState,
 } from '@/dummy-websocket-server';
 
+// Dummy RPC Server (for testing)
+export {
+  DummyRpcServer,
+  type DummyRpcServerOptions,
+} from '@/dummy-rpc-server';
+
 // Version
 export const VERSION = '1.0.0';

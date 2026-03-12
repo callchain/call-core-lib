@@ -2,8 +2,14 @@
  * Test setup file
  */
 
+// Preserve native fetch before mocking
+const nativeFetch = global.fetch;
+
 // Mock fetch for tests
 global.fetch = jest.fn();
+
+// Export native fetch for integration tests to use
+(global as any).__NATIVE_FETCH__ = nativeFetch;
 
 // Mock WebSocket for tests
 class MockWebSocket {
