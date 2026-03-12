@@ -346,7 +346,7 @@ export class DummyRpcServer {
           disconnected: { duration_us: '0', transitions: 0 },
           full: { duration_us: '1000000', transitions: 1 },
           syncing: { duration_us: '0', transitions: 0 },
-          tracking: { duration_us: '0', transitions: 0 },
+          proposing: { duration_us: '0', transitions: 0 },
         },
         uptime: this.state.uptime,
         validated_ledger: {

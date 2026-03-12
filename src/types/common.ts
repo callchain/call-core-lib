@@ -196,8 +196,8 @@ export type ServerState =
   | 'disconnected'
   | 'connected'
   | 'syncing'
-  | 'tracking'
-  | 'full';
+  | 'full'
+  | 'proposing';
 
 /**
  * Transaction engine result code
