@@ -53,6 +53,27 @@ export {
 // Transactions
 export * from '@/transactions';
 
+// Transaction Parser
+export {
+  parseBalanceChanges,
+  parseFinalBalances,
+  parseOrderbookChanges,
+  getAffectedAccounts,
+  parseCurrencyAmount,
+  parseQuality,
+} from '@/parser';
+export type {
+  BalanceChange,
+  BalanceChanges,
+  OrderChange,
+  OrderbookChanges,
+  ParsedCurrencyAmount,
+  NormalizedNode,
+  NodeFields,
+  AffectedNode,
+  RawMetadata,
+} from '@/parser';
+
 // Wallet Types
 export type { SignedTransaction } from '@/crypto/wallet';
 export {
@@ -64,6 +85,27 @@ export {
 } from '@/crypto/wallet';
 
 export { Serializer } from '@/utils/serializer';
+
+// Dummy Blockchain (for testing)
+export {
+  DummyBlockchain,
+  createDummyBlockchain,
+  type AccountRoot,
+  type CallState,
+  type Offer,
+  type SignerList,
+  type TransactionRecord,
+  type LedgerEntry,
+  type LedgerHeader,
+  type TransactionMetadata,
+} from '@/dummy-blockchain';
+
+// Dummy WebSocket Server (for testing)
+export {
+  DummyWebSocketServer,
+  type DummyWebSocketServerOptions,
+  type ServerState,
+} from '@/dummy-websocket-server';
 
 // Version
 export const VERSION = '1.0.0';
