@@ -1,0 +1,154 @@
+{
+  "entries": {
+    "account_roots": [
+      {
+        "account": "50370298f2835f216d4f2956738e24369cbc3b77",
+        "balance": "50003999960",
+        "flags": 0,
+        "ledger_index": "00000000000000000000000050370298f2835f216d4f2956738e24369cbc3b77",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 5
+      },
+      {
+        "account": "7abfb259dd4df0fe4f72398743542bd017a1e34b",
+        "balance": "4999999880",
+        "flags": 0,
+        "ledger_index": "0000000000000000000000007abfb259dd4df0fe4f72398743542bd017a1e34b",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 13
+      },
+      {
+        "account": "acea885a70534357d59c30ae4f5d9de02e336530",
+        "balance": "99999999880",
+        "flags": 0,
+        "ledger_index": "000000000000000000000000acea885a70534357d59c30ae4f5d9de02e336530",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 13
+      },
+      {
+        "account": "b4644fcd4f991451aa69693a60b6ca7689a58548",
+        "balance": "24999999920",
+        "flags": 0,
+        "ledger_index": "000000000000000000000000b4644fcd4f991451aa69693a60b6ca7689a58548",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 9
+      },
+      {
+        "account": "c8f96339b969bb5da024b9ab82e93460647416a7",
+        "balance": "9999999950",
+        "flags": 0,
+        "ledger_index": "000000000000000000000000c8f96339b969bb5da024b9ab82e93460647416a7",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 6
+      },
+      {
+        "account": "14c8f96339b969bb5da024b9ab82e93460647416",
+        "balance": "2816010630762978637",
+        "flags": 0,
+        "ledger_index": "1b3767d1de520f668c660e3b588d189fda1709fedcc7027173f8848593fe43a3",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 4043198322
+      },
+      {
+        "account": "14c8f96339b969bb5da024b9ab82e93460647416",
+        "balance": "2816096640450541929",
+        "flags": 0,
+        "ledger_index": "73bb02ce00f0d46956b10957240757688c824444cd0ad589f8961dae564280d3",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 3143475236
+      },
+      {
+        "account": "209f86d081884c7d659a2feaa0c55ad015a3bf4f",
+        "balance": "1957671116748184940",
+        "flags": 0,
+        "ledger_index": "954d5a49fd70d9b8bcdb35d252267829957f7ef7fa6c74f88419bdc5e82209f4",
+        "owner_count": 0,
+        "previous_txn_id": "0000000000000000000000000000000000000000000000000000000000000000",
+        "previous_txn_lgr_seq": 0,
+        "sequence": 363917322
+      }
+    ],
+    "call_states": [
+      {
+        "account": "7abfb259dd4df0fe4f72398743542bd017a1e34b",
+        "balance": "0",
+        "currency": "00000300000000004c4b40948000000000006400",
+        "issuer": "0000000000000000000000000000000000000000",
+        "ledger_index": "38199a2d3d913a7ea6226aca50cfbdfcf51704cc5b6327a1111647f12e1ab9d7",
+        "limit": "366469185536",
+        "limit_peer": "0"
+      },
+      {
+        "account": "7abfb259dd4df0fe4f72398743542bd017a1e34b",
+        "balance": "0",
+        "currency": "00000100000000004c4b40948000000000006400",
+        "issuer": "0000000000000000000000000000000000000000",
+        "ledger_index": "52c3970a3370772af32fa86dfc587066e9f60d4a72ddd82f0fadf8168480e5b7",
+        "limit": "366469185536",
+        "limit_peer": "0"
+      },
+      {
+        "account": "7abfb259dd4df0fe4f72398743542bd017a1e34b",
+        "balance": "0",
+        "currency": "00000200000000004c4b40948000000000006400",
+        "issuer": "0000000000000000000000000000000000000000",
+        "ledger_index": "674eb756a11657a02d471d48c3adf67e7374a609402dce0cba8ec5390542ceb7",
+        "limit": "366469185536",
+        "limit_peer": "0"
+      },
+      {
+        "account": "7abfb259dd4df0fe4f72398743542bd017a1e34b",
+        "balance": "0",
+        "currency": "00000400000000004c4b40948000000000006400",
+        "issuer": "0000000000000000000000000000000000000000",
+        "ledger_index": "d67606a59c5d6de6d2f4a2433dd63714e3f5a425a4088c75c8435cac689891bd",
+        "limit": "366469185536",
+        "limit_peer": "0"
+      }
+    ],
+    "deposit_preauths": [],
+    "nicknames": [],
+    "offers": [],
+    "other_entries": [],
+    "signer_lists": [
+      {
+        "account": "acea885a70534357d59c30ae4f5d9de02e336530",
+        "ledger_index": "ca761cfb4ce8addf86140bf1fdbb43fc637a6928a46645fc1536baa59910b1f0",
+        "signer_quorum": 0,
+        "signers": []
+      }
+    ]
+  },
+  "ledger_info": {
+    "dump_time": "2026-03-12T13:32:52.804082+00:00",
+    "ledger_hash": "30e8376cd60aafea3e27511b47113bfd53bcac773eef894b92e5be978ae5a67a",
+    "ledger_index": 129
+  },
+  "statistics": {
+    "account_count": 8,
+    "deposit_preauth_count": 0,
+    "nickname_count": 0,
+    "offer_count": 0,
+    "other_entry_count": 0,
+    "signer_list_count": 1,
+    "total_entries": 13,
+    "transaction_count": 0,
+    "trust_line_count": 4
+  },
+  "status": "success",
+  "transactions": []
+}

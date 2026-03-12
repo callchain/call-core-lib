@@ -1,0 +1,91 @@
+{
+  "AccountRoot": {
+    "LedgerEntryType": "AccountRoot",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "Balance": "50000000000",
+    "Sequence": 1,
+    "OwnerCount": 0,
+    "Flags": 0
+  },
+  "CallState": {
+    "LedgerEntryType": "CallState",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "Issuer": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+    "Currency": "USD",
+    "Balance": {
+      "currency": "USD",
+      "issuer": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+      "value": "100"
+    },
+    "Limit": {
+      "currency": "USD",
+      "issuer": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+      "value": "1000"
+    },
+    "Flags": 0
+  },
+  "Offer": {
+    "LedgerEntryType": "Offer",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "Sequence": 1,
+    "TakerPays": {
+      "currency": "USD",
+      "issuer": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+      "value": "100"
+    },
+    "TakerGets": "1000000",
+    "BookDirectory": "ABC1230000000000000000000000000000000000000000000000000000000000",
+    "Flags": 0
+  },
+  "PaymentTransaction": {
+    "TransactionType": "Payment",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "Destination": "c3K3xXhvsWBnP3TitQfeg2ihAuaYybvtc7",
+    "Amount": "1000000",
+    "Fee": "10",
+    "Sequence": 1
+  },
+  "TrustSetTransaction": {
+    "TransactionType": "TrustSet",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "LimitAmount": {
+      "currency": "USD",
+      "issuer": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+      "value": "1000"
+    },
+    "Fee": "10",
+    "Sequence": 1
+  },
+  "OfferCreateTransaction": {
+    "TransactionType": "OfferCreate",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "TakerGets": "1000000",
+    "TakerPays": {
+      "currency": "USD",
+      "issuer": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+      "value": "100"
+    },
+    "Fee": "10",
+    "Sequence": 1
+  },
+  "SignerList": {
+    "LedgerEntryType": "SignerList",
+    "Account": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "SignerQuorum": 2,
+    "Signers": [
+      {
+        "SignerEntry": {
+          "Account": "c3K3xXhvsWBnP3TitQfeg2ihAuaYybvtc7",
+          "SignerWeight": 1
+        }
+      },
+      {
+        "SignerEntry": {
+          "Account": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+          "SignerWeight": 1
+        }
+      }
+    ],
+    "Flags": 0
+  }
+}

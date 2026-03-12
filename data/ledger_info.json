@@ -1,0 +1,12 @@
+{
+  "ledger": {
+    "account_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "close_time": 0,
+    "closed": false,
+    "ledger_hash": "30e8376cd60aafea3e27511b47113bfd53bcac773eef894b92e5be978ae5a67a",
+    "ledger_index": "129",
+    "parent_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "status": "success",
+  "validated": false
+}

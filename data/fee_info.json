@@ -1,0 +1,11 @@
+{
+  "droplets": 10,
+  "fee_base": 10,
+  "fee_ref": 10,
+  "ledger_current_index": 129,
+  "load_base": 256,
+  "load_factor": 256,
+  "reserve_base": "10000000",
+  "reserve_inc": "2000000",
+  "status": "success"
+}

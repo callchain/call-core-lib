@@ -1,0 +1,27 @@
+[
+  {
+    "address": "cGmJBrEfFssWuas4kCoHTX5r6aMEf6QHhy",
+    "hex": "50370298f2835f216d4f2956738e24369cbc3b77",
+    "balance": "50000"
+  },
+  {
+    "address": "cUUsn5u9qPq7MiMiEDwdjMPsHHKyaesHPH",
+    "hex": "7abfb259dd4df0fe4f72398743542bd017a1e34b",
+    "balance": "5000"
+  },
+  {
+    "address": "cHSFoKcGXFZdbB7EKmWQMTUJbr66dwfMR1",
+    "hex": "acea885a70534357d59c30ae4f5d9de02e336530",
+    "balance": "100000"
+  },
+  {
+    "address": "cKKeufyrSZymFeGmtF1Vhi11eCSf2i6MhR",
+    "hex": "b4644fcd4f991451aa69693a60b6ca7689a58548",
+    "balance": "25000"
+  },
+  {
+    "address": "c3K3xXhvsWBnP3TitQfeg2ihAuaYybvtc7",
+    "hex": "c8f96339b969bb5da024b9ab82e93460647416a7",
+    "balance": "10000"
+  }
+]

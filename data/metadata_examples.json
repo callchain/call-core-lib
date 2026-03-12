@@ -1,0 +1,57 @@
+{
+  "PaymentMetadata": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "ABC123...",
+          "PreviousFields": {
+            "Balance": "2000000"
+          },
+          "FinalFields": {
+            "Account": "cSender...",
+            "Balance": "1000000"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "DEF456...",
+          "PreviousFields": {
+            "Balance": "5000000"
+          },
+          "FinalFields": {
+            "Account": "cReceiver...",
+            "Balance": "6000000"
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "OfferCreateMetadata": {
+    "AffectedNodes": [
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "Offer",
+          "LedgerIndex": "ABC123...",
+          "NewFields": {
+            "Account": "cTrader...",
+            "TakerGets": "1000000",
+            "TakerPays": {
+              "currency": "USD",
+              "issuer": "cIssuer...",
+              "value": "50"
+            },
+            "Sequence": 1,
+            "Flags": 0
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  }
+}

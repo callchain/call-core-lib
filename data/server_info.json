@@ -1,0 +1,42 @@
+{
+  "info": {
+    "build_version": "0.1.0",
+    "complete_ledgers": "1-129",
+    "consensus_phase": "Open",
+    "io_latency_ms": 1,
+    "load_factor": 1,
+    "node_id": "b36c9b5b2750a5330108206ed14dfa8d1278509ed88178bfb5a14eb8b46bc142",
+    "peers": 0,
+    "pending_transactions": 0,
+    "server_state": "Full",
+    "state_accounting": {
+      "connected": {
+        "duration_us": "0",
+        "transitions": 0
+      },
+      "disconnected": {
+        "duration_us": "0",
+        "transitions": 0
+      },
+      "full": {
+        "duration_us": "0",
+        "transitions": 0
+      },
+      "syncing": {
+        "duration_us": "0",
+        "transitions": 0
+      },
+      "tracking": {
+        "duration_us": "0",
+        "transitions": 0
+      }
+    },
+    "uptime": 0,
+    "validated_ledger": {
+      "hash": "30e8376cd60aafea3e27511b47113bfd53bcac773eef894b92e5be978ae5a67a",
+      "seq": 129
+    },
+    "validation_count": 0,
+    "validation_quorum": 66
+  }
+}
