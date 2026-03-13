@@ -86,32 +86,5 @@ export {
 
 export { Serializer } from '@/utils/serializer';
 
-// Dummy Blockchain (for testing)
-export {
-  DummyBlockchain,
-  createDummyBlockchain,
-  type AccountRoot,
-  type CallState,
-  type Offer,
-  type SignerList,
-  type TransactionRecord,
-  type LedgerEntry,
-  type LedgerHeader,
-  type TransactionMetadata,
-} from '@/dummy-blockchain';
-
-// Dummy WebSocket Server (for testing)
-export {
-  DummyWebSocketServer,
-  type DummyWebSocketServerOptions,
-  type ServerState,
-} from '@/dummy-websocket-server';
-
-// Dummy RPC Server (for testing)
-export {
-  DummyRpcServer,
-  type DummyRpcServerOptions,
-} from '@/dummy-rpc-server';
-
 // Version
 export const VERSION = '1.0.0';
