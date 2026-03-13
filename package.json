@@ -1,5 +1,5 @@
 {
-  "name": "call-core-lib",
+  "name": "@callchain/call-core-lib",
   "version": "1.0.0",
   "description": "TypeScript/JavaScript client library for Call-Core blockchain",
   "main": "dist/cjs/index.js",

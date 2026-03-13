@@ -111,6 +111,26 @@ export class Serializer {
   }
 
   /**
+   * Serialize transaction for submission (includes signature)
+   */
+  serializeForSubmission(tx: Transaction): Uint8Array {
+    // Use getSortedFields which already includes signature
+    this.bytes = [];
+
+    const sortedFields = this.getSortedFields(tx);
+
+    for (const [fieldName, value] of sortedFields) {
+      if (value === undefined || value === null) continue;
+      this.serializeField(fieldName, value);
+    }
+
+    // Add object end marker
+    this.pushByte(0xe1);
+
+    return new Uint8Array(this.bytes);
+  }
+
+  /**
    * Deserialize binary to transaction
    */
   deserialize(bytes: Uint8Array): Transaction {
@@ -146,9 +166,10 @@ export class Serializer {
 
   /**
    * Convert transaction to hex blob for submission
+   * Includes signature if present
    */
   toHex(tx: Transaction): string {
-    const serialized = this.serialize(tx);
+    const serialized = this.serializeForSubmission(tx);
     return Array.from(serialized)
       .map(b => b.toString(16).padStart(2, '0'))
       .join('')

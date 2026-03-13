@@ -70,6 +70,7 @@ describe('WebSocketClient', () => {
       url: 'ws://localhost:6005',
       reconnect: false,
       heartbeat: false,
+      wsImpl: MockWebSocket as any,
     });
   });
 

@@ -37,6 +37,8 @@ export interface WebSocketClientOptions {
   heartbeat?: boolean;
   heartbeatInterval?: number;
   timeout?: number;
+  /** WebSocket implementation for testing */
+  wsImpl?: typeof WebSocket;
 }
 
 type MessageCallback = (message: WsStreamMessage) => void;
@@ -49,6 +51,7 @@ export class WebSocketClient {
   private heartbeat: boolean;
   private heartbeatInterval: number;
   private timeout: number;
+  private wsImpl: typeof WebSocket;
 
   private ws: WebSocket | null = null;
   private requestId: number = 0;
@@ -70,6 +73,7 @@ export class WebSocketClient {
     this.heartbeat = options.heartbeat ?? true;
     this.heartbeatInterval = options.heartbeatInterval ?? 30000;
     this.timeout = options.timeout ?? 30000;
+    this.wsImpl = options.wsImpl ?? WebSocket;
   }
 
   /**
@@ -84,7 +88,7 @@ export class WebSocketClient {
 
     return new Promise((resolve, reject) => {
       try {
-        this.ws = new WebSocket(this.url);
+        this.ws = new this.wsImpl(this.url);
 
         const timeoutId = setTimeout(() => {
           reject(new Error('Connection timeout'));
@@ -154,7 +158,7 @@ export class WebSocketClient {
    * Check if connected
    */
   isConnected(): boolean {
-    return this.connectionState === 'connected' && this.ws?.readyState === WebSocket.OPEN;
+    return this.connectionState === 'connected' && this.ws?.readyState === this.wsImpl.OPEN;
   }
 
   /**
