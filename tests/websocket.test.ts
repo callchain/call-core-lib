@@ -8,8 +8,11 @@ import { DummyWebSocketServer } from '@/dummy-websocket-server';
 describe('WebSocketClient with DummyWebSocketServer', () => {
   let server: DummyWebSocketServer;
   let client: WebSocketClient;
+  let consoleSpy: jest.SpyInstance;
 
   beforeEach(async () => {
+    // Suppress expected WebSocket errors during tests
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     // Start fresh server on random port
     server = new DummyWebSocketServer({ port: 0 });
     await server.start();
@@ -24,6 +27,7 @@ describe('WebSocketClient with DummyWebSocketServer', () => {
 
   afterEach(async () => {
     await client.disconnect();
+    consoleSpy.mockRestore();
     await server.stop();
   });
 
@@ -271,11 +275,17 @@ describe('WebSocketClient with auto-reconnect', () => {
   let client: WebSocketClient;
 
   afterEach(async () => {
+    // Suppress expected disconnect errors during cleanup
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     await client?.disconnect();
+    consoleSpy.mockRestore();
     await server?.stop();
   });
 
   it('should reconnect after server restart', async () => {
+    // Suppress expected reconnection error logs
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     // Start server
     server = new DummyWebSocketServer({ port: 9998 });
     await server.start();
@@ -305,5 +315,7 @@ describe('WebSocketClient with auto-reconnect', () => {
     // Wait for reconnect
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(client.isConnected()).toBe(true);
+
+    consoleSpy.mockRestore();
   }, 15000);
 });

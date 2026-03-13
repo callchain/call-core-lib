@@ -64,8 +64,11 @@ class MockWebSocket {
 
 describe('WebSocketClient', () => {
   let client: WebSocketClient;
+  let consoleSpy: jest.SpyInstance;
 
   beforeEach(() => {
+    // Suppress expected WebSocket errors during tests
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     client = new WebSocketClient({
       url: 'ws://localhost:6005',
       reconnect: false,
@@ -76,6 +79,7 @@ describe('WebSocketClient', () => {
 
   afterEach(async () => {
     await client.disconnect();
+    consoleSpy.mockRestore();
     // Clear any pending mock responses after disconnect
     pendingMockResponses.forEach(clearTimeout);
     pendingMockResponses.clear();
