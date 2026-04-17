@@ -8,6 +8,7 @@
   "browser": "dist/browser/call-core-lib.min.js",
   "exports": {
     ".": {
+      "browser": "./dist/browser/call-core-lib.min.js",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
       "types": "./dist/types/index.d.ts"
@@ -19,7 +20,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:types && npm run build:cjs && npm run build:esm && npm run build:browser",
+    "build": "npm run clean && npm run build:browser",
+    "build:all": "npm run clean && npm run build:types && npm run build:cjs && npm run build:esm && npm run build:browser",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "build:esm": "tsc --module esnext --outDir dist/esm",
